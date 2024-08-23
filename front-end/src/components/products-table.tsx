@@ -21,16 +21,16 @@ const ProductList: React.FC = () => {
     
       <thead>
         <tr>
-          <th>id</th>
+          <th>Índice</th>
           <th>Nome</th>
           <th>Preço</th>
           <th>Quantidade em estoque</th>
         </tr>
       </thead>
       <tbody>
-        {products.map(product => (
+        {products.map((product, index) => (
           <tr key={product.id}>
-            <td>{product.id}</td>
+            <td>{index+1}</td>
             <td>{product.nome}</td>
             <td>{product.preco}</td>
             <td>{product.estoque}</td>
