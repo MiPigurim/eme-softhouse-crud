@@ -1,31 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { fetchProducts, Product } from '../services/productService';
+import { Table } from 'react-bootstrap';
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    console.log('Carregando produtos...');
     async function loadProducts() {
       const data = await fetchProducts();
       setProducts(data);
-      console.log(data);
     }
 
     loadProducts();
   }, []);
 
   return (
-    <div>
+    <>
       <h1>Lista de Produtos</h1>
-      <ul>
+    <Table striped bordered hover>
+    
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Quantidade em estoque</th>
+        </tr>
+      </thead>
+      <tbody>
         {products.map(product => (
-          <li key={product.id}>
-            {product.nome} - R$ {product.preco.toFixed(2)}
-          </li>
+          <tr key={product.id}>
+            <td>{product.id}</td>
+            <td>{product.nome}</td>
+            <td>{product.preco}</td>
+            <td>{product.estoque}</td>
+          </tr>
         ))}
-      </ul>
-    </div>
+      </tbody>
+    </Table>
+    </>  
   );
 };
 
