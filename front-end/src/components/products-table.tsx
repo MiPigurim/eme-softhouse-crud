@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { deleteProduct, fetchProducts, Product, updateProduct } from '../services/productService';
-import { Button, Table } from 'react-bootstrap';
-
+import React, { useEffect, useState } from "react";
+import {
+  deleteProduct,
+  fetchProducts,
+  Product,
+  updateProduct,
+} from "../services/productService";
+import { Button, Table } from "react-bootstrap";
+import ProductForm from "./product-form";
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -16,14 +21,14 @@ const ProductList: React.FC = () => {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
+    if (window.confirm("Tem certeza que deseja excluir este produto?")) {
       await deleteProduct(id);
       loadProducts();
     }
   };
 
   const handleEdit = async (id: string) => {
-    const newName = prompt('Digite o novo nome do produto:');
+    const newName = prompt("Digite o novo nome do produto:");
     if (newName) {
       await updateProduct(id, { nome: newName });
       loadProducts();
@@ -33,10 +38,9 @@ const ProductList: React.FC = () => {
   return (
     <>
       <h1>Lista de Produtos</h1>
-
+      <ProductForm />
 
       <Table striped responsive hover size="sm">
-
         <thead>
           <tr>
             <th>Índice</th>
@@ -54,8 +58,20 @@ const ProductList: React.FC = () => {
               <td>{product.preco}</td>
               <td>{product.estoque}</td>
               <td>
-                <Button title='Editar produto' variant="outline-dark" className='mx-2 my-1' onClick={() => handleEdit(product.id)}><i className="bi bi-pencil-square"></i></Button>
-                <Button title='Excluir produto' variant="outline-dark"><i className="bi bi-trash" onClick={() => handleDelete(product.id)}></i></Button>
+                <Button
+                  title="Editar produto"
+                  variant="outline-dark"
+                  className="mx-2 my-1"
+                  onClick={() => handleEdit(product.id)}
+                >
+                  <i className="bi bi-pencil-square"></i>
+                </Button>
+                <Button title="Excluir produto" variant="outline-dark">
+                  <i
+                    className="bi bi-trash"
+                    onClick={() => handleDelete(product.id)}
+                  ></i>
+                </Button>
               </td>
             </tr>
           ))}
