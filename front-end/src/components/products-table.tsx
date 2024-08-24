@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchProducts, Product } from '../services/productService';
+import { deleteProduct, fetchProducts, Product, updateProduct } from '../services/productService';
 import { Button, Table } from 'react-bootstrap';
 
 
@@ -7,18 +7,33 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    async function loadProducts() {
-      const data = await fetchProducts();
-      setProducts(data);
-    }
-
     loadProducts();
   }, []);
+
+  const loadProducts = async () => {
+    const data = await fetchProducts();
+    setProducts(data);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm('Tem certeza que deseja excluir este produto?')) {
+      await deleteProduct(id);
+      loadProducts();
+    }
+  };
+
+  const handleEdit = async (id: string) => {
+    const newName = prompt('Digite o novo nome do produto:');
+    if (newName) {
+      await updateProduct(id, { nome: newName });
+      loadProducts();
+    }
+  };
 
   return (
     <>
       <h1>Lista de Produtos</h1>
-      <Button variant="success">Criar novo produto</Button>
+
 
       <Table striped responsive hover size="sm">
 
@@ -39,8 +54,8 @@ const ProductList: React.FC = () => {
               <td>{product.preco}</td>
               <td>{product.estoque}</td>
               <td>
-                <Button title='Editar produto' variant="outline-dark" className='mx-2 my-1'><i className="bi bi-pencil-square"></i></Button>
-                <Button title='Excluir produto' variant="outline-dark"><i className="bi bi-trash"></i></Button>
+                <Button title='Editar produto' variant="outline-dark" className='mx-2 my-1' onClick={() => handleEdit(product.id)}><i className="bi bi-pencil-square"></i></Button>
+                <Button title='Excluir produto' variant="outline-dark"><i className="bi bi-trash" onClick={() => handleDelete(product.id)}></i></Button>
               </td>
             </tr>
           ))}
