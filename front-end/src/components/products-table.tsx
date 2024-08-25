@@ -6,7 +6,6 @@ import {
   updateProduct,
 } from "../services/productService";
 import { Button, Table } from "react-bootstrap";
-import ProductForm from "./product-form";
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -37,15 +36,8 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-      <div
-        className="d-flex justify-content-end mt-3 me-5"
-        style={{ fontFamily: "'Raleway', sans-serif" }}
-      >
-        <ProductForm />
-      </div>
-
-      <div className="d-flex justify-content-center w-100">
-        <Table striped responsive hover size="sm">
+      <div className="w-50">
+        <Table striped hover size="sm">
           <thead>
             <tr>
               <th>Índice</th>
