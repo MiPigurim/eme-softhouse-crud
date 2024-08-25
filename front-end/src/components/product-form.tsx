@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
@@ -10,21 +11,38 @@ function Example() {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
+      <Button variant="success" onClick={handleShow}>
+        Criar novo produto
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Novo produto</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Label>Nome do produto</Form.Label>
+              <Form.Control placeholder="Nome" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Preço do produto</Form.Label>
+              <Form.Control type="number" placeholder="00,00" />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formBasicPassword">
+              <Form.Label>Quantidade em estoque</Form.Label>
+              <Form.Control type="number" placeholder="00" />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
+          <Button variant="secondary" size="sm" onClick={handleClose}>
+            Cancelar
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
+          <Button variant="success" size="sm" onClick={handleClose}>
+            Salvar
           </Button>
         </Modal.Footer>
       </Modal>
