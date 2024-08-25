@@ -37,46 +37,54 @@ const ProductList: React.FC = () => {
 
   return (
     <>
-      <h1>Lista de Produtos</h1>
-      <ProductForm />
+      <div
+        className="d-flex justify-content-end mt-3 me-5"
+        style={{ fontFamily: "'Raleway', sans-serif" }}
+      >
+        <ProductForm />
+      </div>
 
-      <Table striped responsive hover size="sm">
-        <thead>
-          <tr>
-            <th>Índice</th>
-            <th>Nome</th>
-            <th>Preço</th>
-            <th>Quantidade em estoque</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product, index) => (
-            <tr key={product.id}>
-              <td>{index + 1}</td>
-              <td>{product.nome}</td>
-              <td>{product.preco}</td>
-              <td>{product.estoque}</td>
-              <td>
-                <Button
-                  title="Editar produto"
-                  variant="outline-dark"
-                  className="mx-2 my-1"
-                  onClick={() => handleEdit(product.id)}
-                >
-                  <i className="bi bi-pencil-square"></i>
-                </Button>
-                <Button title="Excluir produto" variant="outline-dark">
-                  <i
-                    className="bi bi-trash"
-                    onClick={() => handleDelete(product.id)}
-                  ></i>
-                </Button>
-              </td>
+      <div className="d-flex justify-content-center w-100">
+        <Table striped responsive hover size="sm">
+          <thead>
+            <tr>
+              <th>Índice</th>
+              <th>Nome</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {products.map((product, index) => (
+              <tr key={product.id}>
+                <td>{index + 1}</td>
+                <td>{product.nome}</td>
+                <td>{product.preco}</td>
+                <td>{product.estoque}</td>
+                <td>
+                  <Button
+                    title="Editar produto"
+                    variant="outline-dark"
+                    className="mx-2 my-1"
+                    onClick={() => handleEdit(product.id)}
+                  >
+                    <i className="bi bi-pencil-square"></i>
+                  </Button>
+                  <Button
+                    title="Excluir produto"
+                    variant="outline-danger"
+                    className="mx-2 my-1"
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    <i className="bi bi-trash"></i>
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </>
   );
 };
