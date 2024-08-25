@@ -37,39 +37,83 @@ const ProductList: React.FC = () => {
   return (
     <>
       <div className="w-50">
-        <Table striped hover size="sm">
+        <Table hover size="sm">
           <thead>
-            <tr>
-              <th>Índice</th>
-              <th>Nome</th>
-              <th>Preço</th>
-              <th>Estoque</th>
-              <th>Ações</th>
+            <tr className="text-center">
+              <th
+                style={{
+                  backgroundColor: "#edb97d",
+                  fontFamily: "'New Amsterdam', sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                Índice
+              </th>
+              <th
+                style={{
+                  backgroundColor: "#edb97d",
+                  fontFamily: "'New Amsterdam', sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                Nome
+              </th>
+              <th
+                style={{
+                  backgroundColor: "#edb97d",
+                  fontFamily: "'New Amsterdam', sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                Preço
+              </th>
+              <th
+                style={{
+                  backgroundColor: "#edb97d",
+                  fontFamily: "'New Amsterdam', sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                Estoque
+              </th>
+              <th
+                style={{
+                  backgroundColor: "#edb97d",
+                  fontFamily: "'New Amsterdam', sans-serif",
+                  letterSpacing: "1px",
+                }}
+              >
+                Ações
+              </th>
             </tr>
           </thead>
-          <tbody>
+          <tbody
+            style={{
+              fontFamily: "'Raleway', sans-serif",
+            }}
+          >
             {products.map((product, index) => (
-              <tr key={product.id}>
+              <tr className="text-center" key={product.id}>
                 <td>{index + 1}</td>
                 <td>{product.nome}</td>
-                <td>{product.preco}</td>
+                <td>R${product.preco}</td>
                 <td>{product.estoque}</td>
                 <td>
                   <Button
                     title="Editar produto"
-                    variant="outline-dark"
-                    className="mx-2 my-1"
+                    variant="link"
+                    className="p-0 ms-2 me-3 my-1 hover-effect"
                     onClick={() => handleEdit(product.id)}
                   >
-                    <i className="bi bi-pencil-square"></i>
+                    <i className="bi bi-pencil-square text-dark"></i>
                   </Button>
                   <Button
                     title="Excluir produto"
-                    variant="outline-danger"
-                    className="mx-2 my-1"
+                    variant="link"
+                    className="p-0 ms-3 me-2 my-1"
                     onClick={() => handleDelete(product.id)}
                   >
-                    <i className="bi bi-trash"></i>
+                    <i className="bi bi-trash text-dark"></i>
                   </Button>
                 </td>
               </tr>
