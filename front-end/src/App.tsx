@@ -4,6 +4,7 @@ import ProductsTable from "./components/products-table";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Container } from "react-bootstrap";
 import ProductForm from "./components/product-form";
+import Search from "./components/search";
 
 function App() {
   return (
@@ -25,11 +26,20 @@ function App() {
         </h1>
       </div>
 
-      <div
-        className="d-flex justify-content-end my-3"
-        style={{ fontFamily: "'Raleway', sans-serif", marginRight: "26%" }}
-      >
-        <ProductForm />
+      <div className="row d-flex">
+        <div
+          className="col d-flex justify-content-center align-items-center p-2"
+          style={{ fontFamily: "'Raleway', sans-serif", marginLeft: "240px" }}
+        >
+          <Search />
+        </div>
+
+        <div
+          className="col d-flex justify-content-center align-items-center p-2"
+          style={{ fontFamily: "'Raleway', sans-serif", marginRight: "200px" }}
+        >
+          <ProductForm />
+        </div>
       </div>
 
       <Container fluid className="d-flex justify-content-center w-100">
