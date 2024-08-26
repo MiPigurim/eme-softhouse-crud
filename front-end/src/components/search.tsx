@@ -16,7 +16,7 @@ function Search() {
 
   return (
     <div>
-      <InputGroup className="mb-3">
+      <InputGroup>
         <Form.Control
           placeholder="Pesquisar produto"
           aria-label="Pesquisar produto"

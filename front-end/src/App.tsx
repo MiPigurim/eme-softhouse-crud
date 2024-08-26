@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ProductsTable from "./components/products-table";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { Container } from "react-bootstrap";
+import { Container, Stack } from "react-bootstrap";
 import ProductForm from "./components/product-form";
 import Search from "./components/search";
 
@@ -12,6 +12,7 @@ function App() {
       className="App"
       style={{
         height: "100vh",
+        width: "100vw",
       }}
     >
       <div
@@ -26,22 +27,15 @@ function App() {
         </h1>
       </div>
 
-      <div className="row d-flex">
-        <div
-          className="col d-flex justify-content-center align-items-center p-2"
-          style={{ fontFamily: "'Raleway', sans-serif", marginLeft: "240px" }}
-        >
-          <Search />
-        </div>
+      <Stack
+        direction="horizontal"
+        gap={5}
+        className="d-flex justify-content-center m-4"
+      >
+        <Search />
 
-        <div
-          className="col d-flex justify-content-center align-items-center p-2"
-          style={{ fontFamily: "'Raleway', sans-serif", marginRight: "200px" }}
-        >
-          <ProductForm />
-        </div>
-      </div>
-
+        <ProductForm />
+      </Stack>
       <Container fluid className="d-flex justify-content-center w-100">
         <ProductsTable />
       </Container>
