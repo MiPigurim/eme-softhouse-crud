@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Form, Stack } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { createProduct } from "../services/product-service";
 
-function ProductForm() {
+function ProductForm({ loadProducts }: { loadProducts: () => void }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -14,7 +15,7 @@ function ProductForm() {
 
   const schema = yup
     .object({
-      produto: yup.string().required("Informe o nome do produto"),
+      nome: yup.string().required("Informe o nome do produto"),
       preco: yup
         .number()
         .typeError("Informe o preço do produto")
@@ -23,7 +24,6 @@ function ProductForm() {
       estoque: yup
         .number()
         .integer("O estoque deve ser um valor inteiro")
-        .min(0, "O estoque deve ser zero ou maior")
         .nullable()
         .transform((value, originalValue) =>
           String(originalValue).trim() === "" ? null : value
@@ -38,7 +38,16 @@ function ProductForm() {
     formState: { errors, isValid },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit = async (data: yup.InferType<typeof schema>) => {
+    await createProduct({
+      nome: data.nome,
+      preco: data.preco,
+      estoque: data.estoque ?? 0,
+    });
+    reset();
+    handleClose();
+    loadProducts();
+  };
 
   console.log({ errors });
   console.log({ isValid });
@@ -72,15 +81,15 @@ function ProductForm() {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group className="mb-3" controlId="produto">
+            <Form.Group className="mb-3" controlId="nome">
               <Form.Label>Nome do produto</Form.Label>
               <Form.Control
-                placeholder="Produto"
-                {...register("produto")}
-                isInvalid={!!errors?.produto}
+                placeholder="nome"
+                {...register("nome")}
+                isInvalid={!!errors?.nome}
               />
               <Form.Control.Feedback type="invalid">
-                {errors?.produto?.message}
+                {errors?.nome?.message}
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -127,7 +136,6 @@ function ProductForm() {
               type="submit"
               variant="success"
               size="sm"
-              //onClick={handleClose}
               style={{
                 backgroundColor: "#54881d",
               }}

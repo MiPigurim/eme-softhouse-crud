@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   deleteProduct,
-  fetchProducts,
   Product,
   updateProduct,
-} from "../services/productService";
+} from "../services/product-service";
 import { Button, Table } from "react-bootstrap";
 
-const ProductList: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([]);
+interface ProductsTableProps {
+  products: Product[];
+  loading: boolean;
+  loadProducts: () => void;
+}
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  const loadProducts = async () => {
-    const data = await fetchProducts();
-    setProducts(data);
-  };
-
+const ProductsTable: React.FC<ProductsTableProps> = ({
+  products,
+  loading,
+  loadProducts,
+}) => {
   const handleDelete = async (id: string) => {
     if (window.confirm("Tem certeza que deseja excluir este produto?")) {
       await deleteProduct(id);
@@ -125,4 +123,4 @@ const ProductList: React.FC = () => {
   );
 };
 
-export default ProductList;
+export default ProductsTable;
