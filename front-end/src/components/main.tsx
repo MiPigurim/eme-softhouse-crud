@@ -23,10 +23,9 @@ const Main: React.FC = () => {
         className="d-flex justify-content-center m-4"
       >
         <Search onSearchResults={handleSearchResults} />
-
         <ProductForm loadProducts={loadProducts} />
       </Stack>
-      <Container fluid className="d-flex justify-content-center w-100">
+      <Container fluid className="d-flex justify-content-center">
         {loading ? (
           <div className="position-absolute top-50 start-50 translate-middle">
             <Spinner animation="grow" size="sm" />
@@ -34,10 +33,12 @@ const Main: React.FC = () => {
             <Spinner animation="grow" size="sm" />
           </div>
         ) : (
-          <ProductsTable
-            products={displayedProducts}
-            loadProducts={loadProducts}
-          />
+          <div className="table-responsive">
+            <ProductsTable
+              products={displayedProducts}
+              loadProducts={loadProducts}
+            />
+          </div>
         )}
       </Container>
     </>
