@@ -1,38 +1,31 @@
 import { useState } from "react";
 import { InputGroup, Button, Form } from "react-bootstrap";
+import { Product, searchProducts } from "../services/product-service";
 
 function Search() {
-  const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [searching, setSearching] = useState(false);
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
-    setSearching(true);
-    const response = await fetch(`/api/search?q=${search}`);
-    const data = await response.json();
+  const handleSearch = async (query: string) => {
+    setLoading(true);
+    const data = await searchProducts(query);
     setSearchResults(data);
-    setSearching(false);
+    console.log(data);
+    setLoading(false);
   };
 
   return (
     <div>
       <InputGroup>
         <Form.Control
-          placeholder="Pesquisar produto"
+          placeholder="Pesquisar produto 🔎"
           aria-label="Pesquisar produto"
           aria-describedby="basic-addon2"
           type="text"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          //value={search}
+          onChange={(e) => handleSearch(e.target.value)}
         />
-        <Button
-          onClick={handleSearch}
-          variant="outline-secondary"
-          id="button-addon2"
-        >
-          <i className="bi bi-search"></i>
-        </Button>
-        {searching && <div>Pesquisando...</div>}
+        {loading && <div>Pesquisando...</div>}
         {/* <ul>
           {searchResults.map((result) => (
             <li key={result.id}>{result.name}</li>
