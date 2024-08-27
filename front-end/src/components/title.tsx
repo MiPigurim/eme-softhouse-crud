@@ -2,7 +2,7 @@ const Title: React.FC = () => {
   return (
     <div
       style={{
-        backgroundColor: "#edb97d", // ba9a6b
+        backgroundColor: "var(--bs-primary)",
         fontFamily: "'New Amsterdam', sans-serif",
         letterSpacing: "1px",
       }}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form, Stack } from "react-bootstrap";
+import { Form, OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -86,21 +86,27 @@ function ProductForm({
 
   return (
     <>
-      <Button
-        size="sm"
-        className="me-2 "
-        variant={isEditing ? "outline-success" : "success"}
-        onClick={handleShow}
-        style={{
-          backgroundColor: isEditing ? undefined : "#54881d",
-        }}
+      <OverlayTrigger
+        placement={"bottom"}
+        overlay={isEditing ? <Tooltip>Editar</Tooltip> : <></>}
       >
-        {isEditing ? (
-          <i className="bi bi-pencil-square text-dark"></i>
-        ) : (
-          "Adicionar novo produto"
-        )}
-      </Button>
+        <Button
+          size="sm"
+          className="me-2 "
+          variant={isEditing ? "outline-secondary" : "secondary"}
+          onClick={handleShow}
+          style={{
+            borderWidth: isEditing ? "0px" : "1px",
+            color: "#fff",
+          }}
+        >
+          {isEditing ? (
+            <i className="bi bi-pencil-square text-dark"></i>
+          ) : (
+            "Adicionar novo produto"
+          )}
+        </Button>
+      </OverlayTrigger>
 
       <Modal
         show={show}
@@ -160,7 +166,7 @@ function ProductForm({
           </Modal.Body>
           <Modal.Footer>
             <Button
-              variant="outline-secondary"
+              variant="outline-cancel"
               size="sm"
               onClick={() => {
                 reset();
@@ -171,11 +177,9 @@ function ProductForm({
             </Button>
             <Button
               type="submit"
-              variant="success"
+              variant="secondary"
               size="sm"
-              style={{
-                backgroundColor: "#54881d",
-              }}
+              style={{ color: "#fff" }}
             >
               Salvar
             </Button>

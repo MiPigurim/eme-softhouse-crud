@@ -23,7 +23,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
             <tr className="text-center">
               <th
                 style={{
-                  backgroundColor: "#edb97d",
+                  backgroundColor: "var(--bs-primary)",
                   fontFamily: "'New Amsterdam', sans-serif",
                   letterSpacing: "1px",
                 }}
@@ -32,7 +32,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               </th>
               <th
                 style={{
-                  backgroundColor: "#edb97d",
+                  backgroundColor: "var(--bs-primary)",
                   fontFamily: "'New Amsterdam', sans-serif",
                   letterSpacing: "1px",
                 }}
@@ -41,7 +41,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               </th>
               <th
                 style={{
-                  backgroundColor: "#edb97d",
+                  backgroundColor: "var(--bs-primary)",
                   fontFamily: "'New Amsterdam', sans-serif",
                   letterSpacing: "1px",
                 }}
@@ -50,7 +50,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               </th>
               <th
                 style={{
-                  backgroundColor: "#edb97d",
+                  backgroundColor: "var(--bs-primary)",
                   fontFamily: "'New Amsterdam', sans-serif",
                   letterSpacing: "1px",
                 }}
@@ -59,7 +59,7 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
               </th>
               <th
                 style={{
-                  backgroundColor: "#edb97d",
+                  backgroundColor: "var(--bs-primary)",
                   fontFamily: "'New Amsterdam', sans-serif",
                   letterSpacing: "1px",
                 }}

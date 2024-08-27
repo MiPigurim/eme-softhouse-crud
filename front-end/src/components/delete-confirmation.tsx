@@ -2,6 +2,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { deleteProduct, Product } from "../services/product-service";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function DeleteConfirmation({
   product,
@@ -23,15 +24,19 @@ function DeleteConfirmation({
 
   return (
     <>
-      <Button
-        variant="outline-danger"
-        onClick={handleShow}
-        className="ms-2"
-        size="sm"
-      >
-        <i className="bi bi-trash text-dark"></i>
-      </Button>
-
+      <OverlayTrigger placement={"bottom"} overlay={<Tooltip>Excluir</Tooltip>}>
+        <Button
+          variant="outline-danger"
+          onClick={handleShow}
+          className="ms-2"
+          size="sm"
+          style={{
+            borderWidth: "0px",
+          }}
+        >
+          <i className="bi bi-trash text-dark"></i>
+        </Button>
+      </OverlayTrigger>
       <Modal
         show={show}
         onHide={handleClose}
@@ -44,15 +49,15 @@ function DeleteConfirmation({
               letterSpacing: "1px",
             }}
           >
-            Deletar produto
+            Excluir produto
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Deseja deletar o produto {product.nome} ?</p>
+          <p>Deseja excluir o produto {product.nome} ?</p>
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="outline-secondary"
+            variant="outline-cancel"
             size="sm"
             onClick={() => {
               handleClose();
@@ -61,7 +66,7 @@ function DeleteConfirmation({
             Cancelar
           </Button>
           <Button variant="danger" size="sm" onClick={handleDelete}>
-            Deletar
+            Excluir
           </Button>
         </Modal.Footer>
       </Modal>
