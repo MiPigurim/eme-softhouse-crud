@@ -3,8 +3,5 @@ import { PrismaService } from './database/prisma.service';
 
 @Controller()
 export class AppController {
-  constructor(
-    private prisma: PrismaService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 }
-
