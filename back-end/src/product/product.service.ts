@@ -26,4 +26,15 @@ export class ProductService {
   async remove(id: string) {
     return this.prisma.produtos.delete({ where: { id } });
   }
+
+  async searchProducts(query: string) {
+    return this.prisma.produtos.findMany({
+      where: {
+        nome: {
+          contains: query,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
 }
