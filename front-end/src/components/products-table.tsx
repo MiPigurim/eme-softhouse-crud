@@ -1,11 +1,8 @@
 import React from "react";
-import {
-  deleteProduct,
-  Product,
-  updateProduct,
-} from "../services/product-service";
-import { Button, Table } from "react-bootstrap";
+import { Product } from "../services/product-service";
+import { Table } from "react-bootstrap";
 import ProductForm from "./product-form";
+import DeleteConfirmation from "./delete-confirmation";
 
 interface ProductsTableProps {
   products: Product[];
@@ -18,13 +15,6 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
   loading,
   loadProducts,
 }) => {
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Tem certeza que deseja excluir este produto?")) {
-      await deleteProduct(id);
-      loadProducts();
-    }
-  };
-
   return (
     <>
       <div className="w-50">
@@ -95,15 +85,10 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
                     isEditing
                     product={product}
                   />
-
-                  <Button
-                    title="Excluir produto"
-                    variant="link"
-                    className="p-0 ms-3 me-2 my-1"
-                    onClick={() => handleDelete(product.id)}
-                  >
-                    <i className="bi bi-trash text-dark"></i>
-                  </Button>
+                  <DeleteConfirmation
+                    product={product}
+                    loadProducts={loadProducts}
+                  />
                 </td>
               </tr>
             ))}
