@@ -1,13 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Stack } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { createProduct } from "../services/product-service";
+import {
+  createProduct,
+  Product,
+  updateProduct,
+} from "../services/product-service";
 
-function ProductForm({ loadProducts }: { loadProducts: () => void }) {
+function ProductForm({
+  loadProducts,
+  isEditing,
+  product,
+}: {
+  loadProducts: () => void;
+  isEditing?: boolean;
+  product?: Product;
+}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -36,32 +48,56 @@ function ProductForm({ loadProducts }: { loadProducts: () => void }) {
     handleSubmit,
     reset,
     formState: { errors, isValid },
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      nome: product?.nome,
+      preco: product?.preco,
+      estoque: product?.estoque,
+    },
+  });
+
+  useEffect(() => {
+    reset({
+      nome: product?.nome,
+      preco: product?.preco,
+      estoque: product?.estoque,
+    });
+  }, [product, reset]);
 
   const onSubmit = async (data: yup.InferType<typeof schema>) => {
-    await createProduct({
-      nome: data.nome,
-      preco: data.preco,
-      estoque: data.estoque ?? 0,
-    });
+    if (isEditing && product) {
+      await updateProduct(product.id, {
+        nome: data.nome,
+        preco: data.preco,
+        estoque: data.estoque ?? 0,
+      });
+    } else {
+      await createProduct({
+        nome: data.nome,
+        preco: data.preco,
+        estoque: data.estoque ?? 0,
+      });
+    }
     reset();
     handleClose();
     loadProducts();
   };
 
-  console.log({ errors });
-  console.log({ isValid });
-
   return (
     <>
       <Button
-        variant="success"
+        variant={isEditing ? "outline-success" : "success"}
         onClick={handleShow}
         style={{
-          backgroundColor: "#54881d",
+          backgroundColor: isEditing ? "transparent" : "#54881d",
         }}
       >
-        Criar novo produto
+        {isEditing ? (
+          <i className="bi bi-pencil-square text-dark"></i>
+        ) : (
+          "Adicionar novo produto"
+        )}
       </Button>
 
       <Modal
@@ -77,7 +113,7 @@ function ProductForm({ loadProducts }: { loadProducts: () => void }) {
                 letterSpacing: "1px",
               }}
             >
-              Novo produto
+              {isEditing ? "Editar" : "Novo"} produto
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -119,7 +155,6 @@ function ProductForm({ loadProducts }: { loadProducts: () => void }) {
                 </Form.Control.Feedback>
               </Form.Group>
             </Stack>
-            {/* {errors.exampleRequired && <span>This field is required</span>} */}
           </Modal.Body>
           <Modal.Footer>
             <Button

@@ -5,6 +5,7 @@ import {
   updateProduct,
 } from "../services/product-service";
 import { Button, Table } from "react-bootstrap";
+import ProductForm from "./product-form";
 
 interface ProductsTableProps {
   products: Product[];
@@ -20,14 +21,6 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
   const handleDelete = async (id: string) => {
     if (window.confirm("Tem certeza que deseja excluir este produto?")) {
       await deleteProduct(id);
-      loadProducts();
-    }
-  };
-
-  const handleEdit = async (id: string) => {
-    const newName = prompt("Digite o novo nome do produto:");
-    if (newName) {
-      await updateProduct(id, { nome: newName });
       loadProducts();
     }
   };
@@ -97,14 +90,12 @@ const ProductsTable: React.FC<ProductsTableProps> = ({
                 <td>R${product.preco}</td>
                 <td>{product.estoque}</td>
                 <td>
-                  <Button
-                    title="Editar produto"
-                    variant="link"
-                    className="p-0 ms-2 me-3 my-1 hover-effect"
-                    onClick={() => handleEdit(product.id)}
-                  >
-                    <i className="bi bi-pencil-square text-dark"></i>
-                  </Button>
+                  <ProductForm
+                    loadProducts={loadProducts}
+                    isEditing
+                    product={product}
+                  />
+
                   <Button
                     title="Excluir produto"
                     variant="link"
