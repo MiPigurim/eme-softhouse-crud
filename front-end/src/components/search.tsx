@@ -1,17 +1,14 @@
-import { useState } from "react";
-import { InputGroup, Button, Form } from "react-bootstrap";
+import { InputGroup, Form } from "react-bootstrap";
 import { Product, searchProducts } from "../services/product-service";
 
-function Search() {
-  const [searchResults, setSearchResults] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-
+function Search({
+  onSearchResults,
+}: {
+  onSearchResults: (results: Product[]) => void;
+}) {
   const handleSearch = async (query: string) => {
-    setLoading(true);
     const data = await searchProducts(query);
-    setSearchResults(data);
-    console.log(data);
-    setLoading(false);
+    onSearchResults(data);
   };
 
   return (
@@ -22,14 +19,8 @@ function Search() {
           aria-label="Pesquisar produto"
           aria-describedby="basic-addon2"
           type="text"
-          //value={search}
           onChange={(e) => handleSearch(e.target.value)}
         />
-        {loading && <div>Pesquisando...</div>}
-        {/* <ul>
-          {searchResults.map((result) => (
-            <li key={result.id}>{result.name}</li>
-        </ul> */}
       </InputGroup>
     </div>
   );

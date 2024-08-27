@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Spinner, Stack } from "react-bootstrap";
 import { useProductList } from "../hooks/use-product-list";
 import Search from "./search";
 import ProductForm from "./product-form";
 import ProductsTable from "./products-table";
+import { Product } from "../services/product-service";
 
 const Main: React.FC = () => {
   const { products, loading, loadProducts } = useProductList();
+  const [searchResults, setSearchResults] = useState<Product[]>([]);
+
+  const handleSearchResults = (results: Product[]) => {
+    setSearchResults(results);
+  };
+
+  const displayedProducts = searchResults.length > 0 ? searchResults : products;
   return (
     <>
       <Stack
@@ -14,7 +22,7 @@ const Main: React.FC = () => {
         gap={5}
         className="d-flex justify-content-center m-4"
       >
-        <Search />
+        <Search onSearchResults={handleSearchResults} />
 
         <ProductForm loadProducts={loadProducts} />
       </Stack>
@@ -26,7 +34,10 @@ const Main: React.FC = () => {
             <Spinner animation="grow" size="sm" />
           </div>
         ) : (
-          <ProductsTable products={products} loadProducts={loadProducts} />
+          <ProductsTable
+            products={displayedProducts}
+            loadProducts={loadProducts}
+          />
         )}
       </Container>
     </>
