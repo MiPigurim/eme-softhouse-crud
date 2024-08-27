@@ -6,13 +6,11 @@ import DeleteConfirmation from "./delete-confirmation";
 
 interface ProductsTableProps {
   products: Product[];
-  loading: boolean;
   loadProducts: () => void;
 }
 
 const ProductsTable: React.FC<ProductsTableProps> = ({
   products,
-  loading,
   loadProducts,
 }) => {
   return (

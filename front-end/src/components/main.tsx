@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Stack } from "react-bootstrap";
+import { Container, Spinner, Stack } from "react-bootstrap";
 import { useProductList } from "../hooks/use-product-list";
 import Search from "./search";
 import ProductForm from "./product-form";
@@ -19,11 +19,15 @@ const Main: React.FC = () => {
         <ProductForm loadProducts={loadProducts} />
       </Stack>
       <Container fluid className="d-flex justify-content-center w-100">
-        <ProductsTable
-          products={products}
-          loading={loading}
-          loadProducts={loadProducts}
-        />
+        {loading ? (
+          <div className="position-absolute top-50 start-50 translate-middle">
+            <Spinner animation="grow" size="sm" />
+            <Spinner animation="grow" size="sm" />
+            <Spinner animation="grow" size="sm" />
+          </div>
+        ) : (
+          <ProductsTable products={products} loadProducts={loadProducts} />
+        )}
       </Container>
     </>
   );

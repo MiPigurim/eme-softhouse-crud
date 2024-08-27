@@ -10,8 +10,14 @@ export const useProductList = () => {
   }, []);
 
   const loadProducts = async () => {
-    const data = await fetchProducts();
-    setProducts(data);
+    try {
+      const data = await fetchProducts();
+      setProducts(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return { products, loading, loadProducts };
