@@ -87,10 +87,12 @@ function ProductForm({
   return (
     <>
       <Button
+        size="sm"
+        className="me-2 "
         variant={isEditing ? "outline-success" : "success"}
         onClick={handleShow}
         style={{
-          backgroundColor: isEditing ? "transparent" : "#54881d",
+          backgroundColor: isEditing ? undefined : "#54881d",
         }}
       >
         {isEditing ? (
